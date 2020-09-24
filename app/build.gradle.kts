@@ -35,6 +35,11 @@ android {
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
+    // module
+    implementation(project(":domain"))
+    implementation(project(":model"))
+
+    // test
     testImplementation(Libs.Test.junit)
     androidTestImplementation(Libs.Test.runner)
     androidTestImplementation(Libs.Test.espresso)
