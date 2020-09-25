@@ -26,7 +26,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":data"))
+    api(project(":data"))
     implementation(project(":model"))
 
     implementation(Libs.Kotlin.std)

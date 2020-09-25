@@ -73,6 +73,8 @@ object Libs {
         const val network1 = "io.ktor:ktor-client-android:${Versions.ktor}"
         const val network2 = "io.ktor:ktor-client-cio:${Versions.ktor}"
         const val network3 = "io.ktor:ktor-client-serialization-jvm:${Versions.ktor}"
+        const val log = "io.ktor:ktor-client-logging-jvm:${Versions.ktor}"
+        const val parser = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.0-RC2"
     }
 }
 
@@ -95,7 +97,7 @@ object Plugins {
 //    const val crashlytics = "com.google.firebase.crashlytics"
     const val kapt = "kapt"
     const val hilt = "dagger.hilt.android.plugin"
-    const val safeArgs = "androidx.navigation.safeargs.kotlin"
+    const val serialization = "kotlinx-serialization"
 }
 
 object ClassPaths {
@@ -104,4 +106,5 @@ object ClassPaths {
     const val googleServices = "com.google.gms:google-services:4.3.3"
     const val crashlytics = "com.google.firebase:firebase-crashlytics-gradle:2.0.0-beta02"
     const val hilt = "com.google.dagger:hilt-android-gradle-plugin:2.28-alpha"
+    const val serialization = "org.jetbrains.kotlin:kotlin-serialization:${Versions.kotlin}"
 }
