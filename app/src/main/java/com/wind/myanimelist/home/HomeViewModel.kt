@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wind.domain.data
+import com.wind.domain.succeeded
 import com.wind.domain.usecase.GetTopMangaUseCase
 import com.wind.model.TopList
 import kotlinx.coroutines.launch
@@ -20,10 +21,9 @@ class HomeViewModel@ViewModelInject constructor(private val getTopMangaUseCase: 
     val topManga: LiveData<TopList> = _topManga
 
     init {
-        Timber.e("launch")
         viewModelScope.launch {
             val result = getTopMangaUseCase(Unit)
-            Timber.e("${result.data}")
+            Timber.e("get result isSuccess ${result.succeeded}")
             _topManga.value = result.data
         }
     }

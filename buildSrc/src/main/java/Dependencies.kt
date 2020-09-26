@@ -74,6 +74,7 @@ object Libs {
         const val network2 = "io.ktor:ktor-client-cio:${Versions.ktor}"
         const val network3 = "io.ktor:ktor-client-serialization-jvm:${Versions.ktor}"
         const val log = "io.ktor:ktor-client-logging-jvm:${Versions.ktor}"
+        const val log2 = "ch.qos.logback:logback-classic:1.2.3"
         const val parser = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.0-RC2"
     }
 }

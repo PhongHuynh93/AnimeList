@@ -43,6 +43,7 @@ dependencies {
     implementation(Libs.Network.network2)
     implementation(Libs.Network.network3)
     implementation(Libs.Network.log)
+    implementation(Libs.Network.log2)
     implementation(Libs.Network.parser)
 
     // thread
