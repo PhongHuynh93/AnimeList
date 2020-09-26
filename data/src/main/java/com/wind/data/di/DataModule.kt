@@ -32,7 +32,7 @@ object DataModule {
             }
             install(Logging) {
                 logger = Logger.DEFAULT
-                level = LogLevel.HEADERS
+                level = LogLevel.BODY
             }
         }
         return RepositoryImpl(httpClient)
