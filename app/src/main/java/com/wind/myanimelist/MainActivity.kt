@@ -1,21 +1,17 @@
 package com.wind.myanimelist
 
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.wind.myanimelist.home.HomeViewModel
+import com.wind.myanimelist.home.HomeFragment
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
+import util.addFragment
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
-    private val vmHome by viewModels<HomeViewModel>()
-
+class MainActivity : AppCompatActivity(R.layout.fragment) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        vmHome.topManga.observe(this) {
-            Timber.e("")
+        if (savedInstanceState == null) {
+            addFragment(HomeFragment.newInstance(), R.id.root)
         }
     }
 }

@@ -1,8 +1,11 @@
 package com.wind.model
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
+// TODO: 9/26/2020 create mapper to upper layer
 @Serializable
 data class TopList(
     @SerialName("request_cache_expiry")
@@ -15,6 +18,7 @@ data class TopList(
     val manga: List<Manga> = emptyList()
 )
 
+@Parcelize
 @Serializable
 data class Manga(
     @SerialName("end_date")
@@ -39,4 +43,4 @@ data class Manga(
     val type: String,
     @SerialName("url")
     val url: String?
-)
+): Parcelable

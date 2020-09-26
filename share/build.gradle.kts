@@ -15,6 +15,10 @@ android {
         versionName = Configs.versionName
     }
 
+    buildFeatures {
+        dataBinding = true
+    }
+
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false

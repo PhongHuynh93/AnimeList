@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="requestManager"
+            type="com.bumptech.glide.RequestManager" />
+
+        <variable
+            name="vm"
+            type="com.wind.myanimelist.home.MangaViewModel" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="60dp"
+            android:layout_marginVertical="80dp">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/imgv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:adjustViewBounds="true"
+                android:background="@android:color/holo_blue_bright"
+                android:scaleType="centerCrop"
+                app:image="@{vm.manga.imageUrl}"
+                app:requestManager="@{requestManager}"
+                app:shapeAppearance="@style/RoundView" />
+        </FrameLayout>
+    </FrameLayout>
+
+</layout>
