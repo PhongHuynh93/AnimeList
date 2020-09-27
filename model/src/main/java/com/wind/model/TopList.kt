@@ -18,29 +18,3 @@ data class TopList(
     val manga: List<Manga> = emptyList()
 )
 
-@Parcelize
-@Serializable
-data class Manga(
-    @SerialName("end_date")
-    val endDate: String?,
-    @SerialName("episodes")
-    val episodes: Int?,
-    @SerialName("image_url")
-    val imageUrl: String?,
-    @SerialName("mal_id")
-    val malId: Int,
-    @SerialName("members")
-    val members: Int,
-    @SerialName("rank")
-    val rank: Int,
-    @SerialName("score")
-    val score: Int,
-    @SerialName("start_date")
-    val startDate: String?,
-    @SerialName("title")
-    val title: String?,
-    @SerialName("type")
-    val type: String,
-    @SerialName("url")
-    val url: String?
-): Parcelable

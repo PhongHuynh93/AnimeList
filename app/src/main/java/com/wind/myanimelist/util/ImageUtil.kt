@@ -14,5 +14,6 @@ import com.wind.myanimelist.R
 fun ImageView.loadImage(requestManager: RequestManager, url: String?) {
     requestManager
         .load(url)
+        .placeholder(R.drawable.image_placeholder)
         .into(this)
 }
