@@ -1,7 +1,7 @@
 package com.wind.myanimelist.model
 
-import com.wind.model.Anime
-import com.wind.model.Manga
+import com.wind.domain.model.Anime
+import com.wind.domain.model.Manga
 import com.wind.myanimelist.util.AdapterTypeUtil
 
 /**
@@ -26,4 +26,11 @@ data class HomeAnime(
     override fun getType(): Int {
         return AdapterTypeUtil.TYPE_ANIME_SLIDER
     }
+}
+
+data class Title(val resId: Int): HomeItem {
+    override fun getType(): Int {
+        return AdapterTypeUtil.TYPE_TITLE
+    }
+
 }

@@ -3,6 +3,7 @@ plugins {
     kotlin(Plugins.kotlinAndroid)
     kotlin(Plugins.kotlinExtensions)
     kotlin(Plugins.kapt)
+    id(Plugins.serialization)
 }
 
 android {
@@ -26,8 +27,6 @@ android {
 }
 
 dependencies {
-    implementation(project(":model"))
-
     implementation(Libs.Kotlin.std)
     implementation(Libs.Android.core)
 

@@ -8,7 +8,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
-import com.wind.model.Anime
+import com.wind.domain.model.Anime
 import com.wind.myanimelist.databinding.FragmentItemAnimeBinding
 import dagger.hilt.android.AndroidEntryPoint
 

@@ -17,8 +17,8 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.RequestManager
-import com.wind.model.Anime
-import com.wind.model.Manga
+import com.wind.domain.model.Anime
+import com.wind.domain.model.Manga
 import com.wind.myanimelist.R
 import com.wind.myanimelist.databinding.FragmentHomeBinding
 import com.wind.myanimelist.databinding.ItemAnimeHomePagerBinding

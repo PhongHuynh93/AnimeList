@@ -4,7 +4,7 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.wind.model.Anime
+import com.wind.domain.model.Anime
 
 /**
  * Created by Phong Huynh on 9/26/2020

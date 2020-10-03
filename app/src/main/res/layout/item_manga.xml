@@ -11,7 +11,7 @@
 
         <variable
             name="item"
-            type="com.wind.model.Manga" />
+            type="com.wind.domain.model.Manga" />
     </data>
 
     <widget.RatioCardView

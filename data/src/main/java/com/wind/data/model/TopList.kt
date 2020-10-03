@@ -1,4 +1,4 @@
-package com.wind.model
+package com.wind.data.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

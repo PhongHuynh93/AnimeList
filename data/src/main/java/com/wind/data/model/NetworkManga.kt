@@ -1,36 +1,31 @@
-package com.wind.model
+package com.wind.data.model
 
-import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-/**
- * Created by Phong Huynh on 9/27/2020
- */
-@Parcelize
 @Serializable
-data class Anime(
+data class NetworkManga(
     @SerialName("end_date")
     val endDate: String?,
-    @SerialName("episodes")
-    val episodes: Int?,
     @SerialName("image_url")
     val imageUrl: String?,
     @SerialName("mal_id")
-    val malId: Int,
+    val id: Int?,
     @SerialName("members")
-    val members: Int,
+    val members: Int?,
     @SerialName("rank")
-    val rank: Int,
+    val rank: Int?,
     @SerialName("score")
-    val score: Int,
+    val score: Double?,
     @SerialName("start_date")
     val startDate: String?,
     @SerialName("title")
     val title: String?,
     @SerialName("type")
-    val type: String,
+    val type: String?,
     @SerialName("url")
-    val url: String?
-): Parcelable
+    val url: String?,
+//    @SerialName("volumes")
+//    val volumes: Any?
+)

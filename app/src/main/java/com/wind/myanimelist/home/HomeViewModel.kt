@@ -8,9 +8,11 @@ import androidx.lifecycle.viewModelScope
 import com.wind.domain.data
 import com.wind.domain.usecase.GetTopAnimeUseCase
 import com.wind.domain.usecase.GetTopMangaUseCase
+import com.wind.myanimelist.R
 import com.wind.myanimelist.model.HomeAnime
 import com.wind.myanimelist.model.HomeItem
 import com.wind.myanimelist.model.HomeManga
+import com.wind.myanimelist.model.Title
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
@@ -33,13 +35,16 @@ class HomeViewModel @ViewModelInject constructor(
                 getTopAnimeUseCase(Unit)
             }
             val list = mutableListOf<HomeItem>()
+            // TODO: 10/3/2020 add the title
             topMangaListDeferred.await().apply {
                 data?.let {
+//                    list.add(Title(R.string.top_manga))
                     list.add(HomeManga(it))
                 }
             }
             topAnimeListDeferred.await().apply {
                 data?.let {
+//                    list.add(Title(R.string.top_anime))
                     list.add(HomeAnime(it))
                 }
             }

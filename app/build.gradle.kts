@@ -37,7 +37,6 @@ dependencies {
 
     // module
     implementation(project(":domain"))
-    implementation(project(":model"))
     implementation(project(":share"))
 
     // test
