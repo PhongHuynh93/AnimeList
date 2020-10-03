@@ -20,13 +20,12 @@ import com.bumptech.glide.RequestManager
 import com.wind.domain.model.Anime
 import com.wind.domain.model.Manga
 import com.wind.myanimelist.R
-import com.wind.myanimelist.databinding.FragmentHomeBinding
-import com.wind.myanimelist.databinding.ItemAnimeHomePagerBinding
-import com.wind.myanimelist.databinding.ItemMangaBinding
-import com.wind.myanimelist.databinding.ItemMangaHomePagerBinding
+import com.wind.myanimelist.adapter.TitleViewHolder
+import com.wind.myanimelist.databinding.*
 import com.wind.myanimelist.model.HomeAnime
 import com.wind.myanimelist.model.HomeItem
 import com.wind.myanimelist.model.HomeManga
+import com.wind.myanimelist.model.Title
 import com.wind.myanimelist.util.AdapterTypeUtil
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -120,6 +119,9 @@ class HomeAdapter @Inject constructor(@ApplicationContext private val applicatio
                     }
                 }
             }
+            AdapterTypeUtil.TYPE_TITLE -> {
+                TitleViewHolder(ItemTitleBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+            }
             else -> {
                 throw IllegalStateException("Not support viewType $viewType")
             }
@@ -138,6 +140,10 @@ class HomeAdapter @Inject constructor(@ApplicationContext private val applicatio
                 val homePagerViewHolder = holder as HomeMangaPagerViewHolder
                 homePagerViewHolder.binding.item = item as HomeManga
                 homePagerViewHolder.binding.executePendingBindings()
+            }
+            AdapterTypeUtil.TYPE_TITLE -> {
+                val vh = holder as TitleViewHolder
+                vh.binding.text = applicationContext.getString((item as Title).resId)
             }
         }
     }

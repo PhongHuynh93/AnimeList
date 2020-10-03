@@ -38,13 +38,13 @@ class HomeViewModel @ViewModelInject constructor(
             // TODO: 10/3/2020 add the title
             topMangaListDeferred.await().apply {
                 data?.let {
-//                    list.add(Title(R.string.top_manga))
+                    list.add(Title(R.string.top_manga))
                     list.add(HomeManga(it))
                 }
             }
             topAnimeListDeferred.await().apply {
                 data?.let {
-//                    list.add(Title(R.string.top_anime))
+                    list.add(Title(R.string.top_anime))
                     list.add(HomeAnime(it))
                 }
             }
