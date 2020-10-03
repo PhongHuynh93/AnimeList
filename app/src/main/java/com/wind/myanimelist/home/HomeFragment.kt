@@ -1,6 +1,7 @@
 package com.wind.myanimelist.home
 
 import android.content.Context
+import android.graphics.Rect
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -31,6 +32,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.qualifiers.ApplicationContext
 import timber.log.Timber
 import util.dp
+import util.getDimen
 import javax.inject.Inject
 
 /**
@@ -83,6 +85,7 @@ class HomeAdapter @Inject constructor(@ApplicationContext private val applicatio
         return true
     }
 }) {
+    private val spaceNormal = applicationContext.getDimen(R.dimen.space_normal).toInt()
 
     init {
         stateRestorationPolicy = StateRestorationPolicy.PREVENT_WHEN_EMPTY
@@ -148,20 +151,29 @@ class HomeAdapter @Inject constructor(@ApplicationContext private val applicatio
         fun onClickAnime(pos: Int, homeAnime: HomeAnime)
     }
 
+
     inner class HomeMangaPagerViewHolder(val binding: ItemMangaHomePagerBinding) : RecyclerView.ViewHolder(binding.root) {
         init {
-            binding.viewPager2.adapter = pagerMangaAdapter
-            val compositePageTransformer = CompositePageTransformer().apply {
-                addTransformer(ScalePageTransform(applicationContext, binding.viewPager2))
-                addTransformer(
-                    MarginPageTransform(
-                        binding.viewPager2,
-                        (48 * applicationContext.dp()).toInt(),
-                        (48 * applicationContext.dp()).toInt()
-                    )
-                )
+            binding.rcv.apply {
+                adapter = pagerMangaAdapter
+                layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+                setHasFixedSize(true)
+                addItemDecoration(object: RecyclerView.ItemDecoration() {
+                    override fun getItemOffsets(
+                        outRect: Rect,
+                        view: View,
+                        parent: RecyclerView,
+                        state: RecyclerView.State
+                    ) {
+                        super.getItemOffsets(outRect, view, parent, state)
+                        outRect.right = spaceNormal
+                        val pos = parent.getChildAdapterPosition(view)
+                        if (pos == 0) {
+                            outRect.left = spaceNormal
+                        }
+                    }
+                })
             }
-            binding.viewPager2.setPageTransformer(compositePageTransformer)
         }
     }
     inner class HomeAnimePagerViewHolder(val binding: ItemAnimeHomePagerBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -183,7 +195,7 @@ class HomeAdapter @Inject constructor(@ApplicationContext private val applicatio
 }
 
 @BindingAdapter("data")
-fun ViewPager2.loadManga(data: List<Manga>?) {
+fun RecyclerView.loadManga(data: List<Manga>?) {
     data?.let {
         (adapter as PagerMangaAdapter).submitList(data)
     }

@@ -9,9 +9,9 @@
             type="com.wind.myanimelist.model.HomeManga" />
     </data>
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/viewPager2"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcv"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="@dimen/top_manga_height"
         app:data="@{item.list}"/>
 </layout>

@@ -12,7 +12,7 @@ data class Manga(
 //    @SerialName("end_date")
 //    val endDate: Any?,
     @SerialName("image_url")
-    val imageUrl: String,
+    val imageUrl: String?,
     @SerialName("mal_id")
     val id: Int,
     @SerialName("members")

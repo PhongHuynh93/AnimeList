@@ -15,7 +15,7 @@
     </data>
 
     <widget.RatioCardView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         app:rcv_dimensionRatio="2:3"
         app:cardCornerRadius="@dimen/default_radius"
@@ -46,15 +46,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:layout_marginHorizontal="@dimen/space_normal"
-            android:layout_marginBottom="@dimen/space_normal"
+            android:layout_marginHorizontal="@dimen/space_pretty_small"
+            android:layout_marginBottom="@dimen/space_pretty_small"
             android:ellipsize="end"
             android:maxLines="2"
             android:shadowColor="@color/text_shadow"
             android:shadowDx="1"
             android:shadowDy="1"
             android:shadowRadius="2"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+            android:includeFontPadding="false"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
             android:textColor="?android:attr/textColorPrimary"
             android:textStyle="bold"
             android:theme="@style/AppTheme.Dark"
