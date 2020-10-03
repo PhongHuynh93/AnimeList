@@ -13,9 +13,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager2.adapter.FragmentStateAdapter
-import androidx.viewpager2.widget.CompositePageTransformer
-import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.RequestManager
 import com.wind.domain.model.Anime
 import com.wind.domain.model.Manga
@@ -29,8 +26,6 @@ import com.wind.myanimelist.model.Title
 import com.wind.myanimelist.util.AdapterTypeUtil
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.qualifiers.ApplicationContext
-import timber.log.Timber
-import util.dp
 import util.getDimen
 import javax.inject.Inject
 
@@ -74,7 +69,7 @@ fun RecyclerView.loadData(data: List<HomeItem>?) {
     }
 }
 
-class HomeAdapter @Inject constructor(@ApplicationContext private val applicationContext: Context, private val pagerMangaAdapter: PagerMangaAdapter, private val pagerAnimeAdapter: PagerAnimeAdapter) : ListAdapter<HomeItem, RecyclerView.ViewHolder>(object : DiffUtil
+class HomeAdapter @Inject constructor(@ApplicationContext private val applicationContext: Context, private val homeMangaHozAdapter: HomeMangaHozAdapter, private val homeAnimeHozAdapter: HomeAnimeHozAdapter) : ListAdapter<HomeItem, RecyclerView.ViewHolder>(object : DiffUtil
 .ItemCallback<HomeItem>() {
     override fun areItemsTheSame(oldItem: HomeItem, newItem: HomeItem): Boolean {
         return oldItem === newItem
@@ -90,34 +85,19 @@ class HomeAdapter @Inject constructor(@ApplicationContext private val applicatio
         stateRestorationPolicy = StateRestorationPolicy.PREVENT_WHEN_EMPTY
     }
 
-    var callback: Callback? = null
-
     override fun getItemViewType(position: Int): Int {
         return getItem(position).getType()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
+            AdapterTypeUtil.TYPE_ANIME_SLIDER -> {
+                val binding = ItemMangaHomePagerBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                HomeAnimeHozListViewHolder(binding)
+            }
             AdapterTypeUtil.TYPE_MANGA_SLIDER -> {
                 val binding = ItemMangaHomePagerBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-                HomeMangaPagerViewHolder(binding).apply {
-                    itemView.setOnClickListener {
-                        val pos = bindingAdapterPosition
-                        if (pos >= 0) {
-                            callback?.onClickManga(pos, getItem(pos) as HomeManga)
-                        }
-                    }
-                }
-            }
-            AdapterTypeUtil.TYPE_ANIME_SLIDER -> {
-                HomeAnimePagerViewHolder(ItemAnimeHomePagerBinding.inflate(LayoutInflater.from(parent.context), parent, false)).apply {
-                    itemView.setOnClickListener {
-                        val pos = bindingAdapterPosition
-                        if (pos >= 0) {
-                            callback?.onClickAnime(pos, getItem(pos) as HomeAnime)
-                        }
-                    }
-                }
+                HomeMangaHozListViewHolder(binding)
             }
             AdapterTypeUtil.TYPE_TITLE -> {
                 TitleViewHolder(ItemTitleBinding.inflate(LayoutInflater.from(parent.context), parent, false))
@@ -132,13 +112,13 @@ class HomeAdapter @Inject constructor(@ApplicationContext private val applicatio
         val item = getItem(position)
         when (getItemViewType(position)) {
             AdapterTypeUtil.TYPE_ANIME_SLIDER -> {
-                val homePagerViewHolder = holder as HomeAnimePagerViewHolder
-                homePagerViewHolder.binding.item = item as HomeAnime
+                val homePagerViewHolder = holder as HomeAnimeHozListViewHolder
+                homePagerViewHolder.binding.item = item
                 homePagerViewHolder.binding.executePendingBindings()
             }
             AdapterTypeUtil.TYPE_MANGA_SLIDER -> {
-                val homePagerViewHolder = holder as HomeMangaPagerViewHolder
-                homePagerViewHolder.binding.item = item as HomeManga
+                val homePagerViewHolder = holder as HomeMangaHozListViewHolder
+                homePagerViewHolder.binding.item = item
                 homePagerViewHolder.binding.executePendingBindings()
             }
             AdapterTypeUtil.TYPE_TITLE -> {
@@ -152,16 +132,10 @@ class HomeAdapter @Inject constructor(@ApplicationContext private val applicatio
         submitList(data)
     }
 
-    interface Callback {
-        fun onClickManga(pos: Int, homeManga: HomeManga)
-        fun onClickAnime(pos: Int, homeAnime: HomeAnime)
-    }
-
-
-    inner class HomeMangaPagerViewHolder(val binding: ItemMangaHomePagerBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class HomeMangaHozListViewHolder(val binding: ItemMangaHomePagerBinding) : RecyclerView.ViewHolder(binding.root) {
         init {
             binding.rcv.apply {
-                adapter = pagerMangaAdapter
+                adapter = homeMangaHozAdapter
                 layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
                 setHasFixedSize(true)
                 addItemDecoration(object: RecyclerView.ItemDecoration() {
@@ -182,39 +156,43 @@ class HomeAdapter @Inject constructor(@ApplicationContext private val applicatio
             }
         }
     }
-    inner class HomeAnimePagerViewHolder(val binding: ItemAnimeHomePagerBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class HomeAnimeHozListViewHolder(val binding: ItemMangaHomePagerBinding) : RecyclerView.ViewHolder(binding.root) {
         init {
-            binding.viewPager2.adapter = pagerAnimeAdapter
-            val compositePageTransformer = CompositePageTransformer().apply {
-                addTransformer(ScalePageTransform(applicationContext, binding.viewPager2))
-                addTransformer(
-                    MarginPageTransform(
-                        binding.viewPager2,
-                        (48 * applicationContext.dp()).toInt(),
-                        (48 * applicationContext.dp()).toInt()
-                    )
-                )
+            binding.rcv.apply {
+                adapter = homeAnimeHozAdapter
+                layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+                setHasFixedSize(true)
+                addItemDecoration(object: RecyclerView.ItemDecoration() {
+                    override fun getItemOffsets(
+                        outRect: Rect,
+                        view: View,
+                        parent: RecyclerView,
+                        state: RecyclerView.State
+                    ) {
+                        super.getItemOffsets(outRect, view, parent, state)
+                        outRect.right = spaceNormal
+                        val pos = parent.getChildAdapterPosition(view)
+                        if (pos == 0) {
+                            outRect.left = spaceNormal
+                        }
+                    }
+                })
             }
-            binding.viewPager2.setPageTransformer(compositePageTransformer)
         }
     }
 }
 
 @BindingAdapter("data")
-fun RecyclerView.loadManga(data: List<Manga>?) {
+fun RecyclerView.loadManga(data: HomeItem?) {
     data?.let {
-        (adapter as PagerMangaAdapter).submitList(data)
+        when (data) {
+            is HomeManga -> (adapter as HomeMangaHozAdapter).submitList(data.list)
+            is HomeAnime -> (adapter as HomeAnimeHozAdapter).submitList(data.list)
+        }
     }
 }
 
-@BindingAdapter("data")
-fun ViewPager2.loadAnime(data: List<Anime>?) {
-    data?.let {
-        (adapter as PagerAnimeAdapter).setData(data)
-    }
-}
-
-class PagerMangaAdapter @Inject constructor(private val requestManager: RequestManager): ListAdapter<Manga, PagerMangaAdapter.ViewHolder>(object : DiffUtil
+class HomeMangaHozAdapter @Inject constructor(private val requestManager: RequestManager): ListAdapter<Manga, HomeMangaHozAdapter.ViewHolder>(object : DiffUtil
 .ItemCallback<Manga>() {
     override fun areItemsTheSame(oldItem: Manga, newItem: Manga): Boolean {
         return oldItem.id == newItem.id
@@ -252,6 +230,7 @@ class PagerMangaAdapter @Inject constructor(private val requestManager: RequestM
         holder.binding.executePendingBindings()
     }
 
+    @FunctionalInterface
     interface Callback {
         fun onClick(view: View, pos: Int, item: Manga)
     }
@@ -259,19 +238,48 @@ class PagerMangaAdapter @Inject constructor(private val requestManager: RequestM
     inner class ViewHolder(val binding: ItemMangaBinding) : RecyclerView.ViewHolder(binding.root)
 }
 
-class PagerAnimeAdapter @Inject constructor(frag: Fragment) : FragmentStateAdapter(frag) {
-    private var data = emptyList<Anime>()
-
-    override fun getItemCount(): Int {
-        return data.size
+class HomeAnimeHozAdapter @Inject constructor(private val requestManager: RequestManager): ListAdapter<Anime, HomeAnimeHozAdapter.ViewHolder>(object : DiffUtil
+.ItemCallback<Anime>() {
+    override fun areItemsTheSame(oldItem: Anime, newItem: Anime): Boolean {
+        return oldItem.id == newItem.id
     }
 
-    override fun createFragment(position: Int): Fragment {
-        return AnimeItemFragment.newInstance(data[position])
+    override fun areContentsTheSame(oldItem: Anime, newItem: Anime): Boolean {
+        return oldItem == newItem
+    }
+}) {
+
+    init {
+        stateRestorationPolicy = StateRestorationPolicy.PREVENT_WHEN_EMPTY
     }
 
-    fun setData(data: List<Anime>) {
-        this.data = data
-        notifyDataSetChanged()
+    var callback: Callback? = null
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val binding = ItemAnimeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding).apply {
+            itemView.setOnClickListener { view ->
+                val pos = bindingAdapterPosition
+                if (pos >= 0) {
+                    getItem(pos)?.let {
+                        callback?.onClick(view, pos, it)
+                    }
+                }
+            }
+        }
     }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val item = getItem(position)
+        holder.binding.item = item
+        holder.binding.requestManager = requestManager
+        holder.binding.executePendingBindings()
+    }
+
+    @FunctionalInterface
+    interface Callback {
+        fun onClick(view: View, pos: Int, item: Anime)
+    }
+
+    inner class ViewHolder(val binding: ItemAnimeBinding) : RecyclerView.ViewHolder(binding.root)
 }

@@ -6,12 +6,12 @@
     <data>
         <variable
             name="item"
-            type="com.wind.myanimelist.model.HomeManga" />
+            type="com.wind.myanimelist.model.HomeItem" />
     </data>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcv"
         android:layout_width="match_parent"
         android:layout_height="@dimen/top_manga_height"
-        app:data="@{item.list}"/>
+        app:data="@{item}"/>
 </layout>

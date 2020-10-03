@@ -10,13 +10,14 @@
             type="com.bumptech.glide.RequestManager" />
 
         <variable
-            name="vm"
-            type="com.wind.myanimelist.home.AnimeViewModel" />
+            name="item"
+            type="com.wind.domain.model.Anime" />
     </data>
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
+    <widget.RatioCardView
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        app:rcv_dimensionRatio="2:3"
         app:cardCornerRadius="@dimen/default_radius"
         app:cardElevation="16dp"
         tools:background="@android:color/white"
@@ -29,9 +30,9 @@
             android:layout_gravity="center"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
-            app:image="@{vm.anime.imageUrl}"
-            app:requestManager="@{requestManager}"
             app:shapeAppearance="@style/RoundView"
+            app:image="@{item.imageUrl}"
+            app:requestManager="@{requestManager}"
             tools:ignore="ContentDescription" />
 
         <View
@@ -45,19 +46,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:layout_marginHorizontal="@dimen/space_normal"
-            android:layout_marginBottom="@dimen/space_normal"
+            android:layout_marginHorizontal="@dimen/space_pretty_small"
+            android:layout_marginBottom="@dimen/space_pretty_small"
             android:ellipsize="end"
             android:maxLines="2"
             android:shadowColor="@color/text_shadow"
             android:shadowDx="1"
             android:shadowDy="1"
             android:shadowRadius="2"
-            android:text="@{vm.anime.title}"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+            android:includeFontPadding="false"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
             android:textColor="?android:attr/textColorPrimary"
             android:textStyle="bold"
             android:theme="@style/AppTheme.Dark"
+            android:text="@{item.title}"
             tools:text="@tools:sample/full_names" />
-    </androidx.cardview.widget.CardView>
+    </widget.RatioCardView>
 </layout>
