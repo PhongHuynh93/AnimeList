@@ -2,9 +2,7 @@ package com.wind.myanimelist.util
 
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
-import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.wind.myanimelist.R
 
 /**
