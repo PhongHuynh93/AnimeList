@@ -19,7 +19,7 @@
         android:layout_height="match_parent"
         app:rcv_dimensionRatio="2:3"
         app:cardCornerRadius="@dimen/default_radius"
-        app:cardElevation="16dp"
+        app:cardElevation="0dp"
         tools:background="@android:color/white"
         tools:ignore="UselessParent">
 
