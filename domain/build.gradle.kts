@@ -35,11 +35,4 @@ dependencies {
 
     // thread
     implementation(Libs.Thread.coroutine)
-
-    // helper
-    implementation(Libs.Helper.timber)
-    implementation(Libs.Helper.workManager)
-
-    // paging
-    implementation(Libs.Android.page)
 }

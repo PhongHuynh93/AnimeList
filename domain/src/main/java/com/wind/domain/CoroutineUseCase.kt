@@ -2,7 +2,6 @@ package com.wind.domain
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
-import timber.log.Timber
 
 /**
  * Executes business logic synchronously or asynchronously using Coroutines.
@@ -26,7 +25,6 @@ abstract class UseCase<in P, R>(private val coroutineDispatcher: CoroutineDispat
                 }
             }
         } catch (e: Exception) {
-            Timber.d(e)
             Result.Error(e)
         }
     }

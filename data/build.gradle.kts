@@ -28,7 +28,6 @@ android {
 
 dependencies {
     implementation(Libs.Kotlin.std)
-    implementation(Libs.Android.core)
 
     // dagger
     implementation(Libs.Dagger.core)
@@ -43,11 +42,4 @@ dependencies {
 
     // thread
     implementation(Libs.Thread.coroutine)
-
-    // helper
-    implementation(Libs.Helper.timber)
-    implementation(Libs.Helper.workManager)
-
-    // paging
-    implementation(Libs.Android.page)
 }
