@@ -28,13 +28,7 @@ object Libs {
         const val std = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.kotlin}"
     }
     object Dagger {
-        const val core = "com.google.dagger:hilt-android:2.28.3-alpha"
-        const val compiler = "com.google.dagger:hilt-android-compiler:2.28.3-alpha"
-        const val coreDagger = "com.google.dagger:dagger-android-support:2.28.3"
-        const val compilerDagger = "com.google.dagger:dagger-android-processor:2.28.3"
-        const val viewmodel =  "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha01"
-        const val hiltCompiler = "androidx.hilt:hilt-compiler:1.0.0-alpha01"
-        const val workmanager = "androidx.hilt:hilt-work:1.0.0-alpha01"
+        const val core = "org.kodein.di:kodein-di-framework-android-x:7.1.0"
     }
     object Test {
         const val junit = "junit:junit:4.12"

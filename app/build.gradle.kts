@@ -1,6 +1,5 @@
 plugins {
     id(Plugins.androidApplication)
-    id(Plugins.hilt)
     kotlin(Plugins.kotlinAndroid)
     kotlin(Plugins.kotlinExtensions)
     kotlin(Plugins.kapt)
@@ -63,10 +62,6 @@ dependencies {
 
     // For dagger 2
     implementation(Libs.Dagger.core)
-    kapt(Libs.Dagger.compiler)
-    implementation(Libs.Dagger.viewmodel)
-    kapt(Libs.Dagger.hiltCompiler)
-    implementation(Libs.Dagger.workmanager)
 
     // glide
     implementation(Libs.Glide.glide1)

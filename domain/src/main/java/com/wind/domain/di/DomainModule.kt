@@ -1,34 +1,26 @@
 package com.wind.domain.di
 
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import javax.inject.Singleton
+import org.kodein.di.DI
+import org.kodein.di.bind
+import org.kodein.di.singleton
 
-@Module
-@InstallIn(ApplicationComponent::class)
-object DomainModule {
-
-    @DefaultDispatcher
-    @Provides
-    @Singleton
-    fun providesDefaultDispatcher(): CoroutineDispatcher = Dispatchers.Default
-
-    @IoDispatcher
-    @Provides
-    @Singleton
-    fun providesIoDispatcher(): CoroutineDispatcher = Dispatchers.IO
-
-    @MainDispatcher
-    @Provides
-    @Singleton
-    fun providesMainDispatcher(): CoroutineDispatcher = Dispatchers.Main
-
-    @MainImmediateDispatcher
-    @Provides
-    @Singleton
-    fun providesMainImmediateDispatcher(): CoroutineDispatcher = Dispatchers.Main.immediate
+const val defaultDispatcherTag = "DefaultDispatcher"
+const val ioDispatcherTag = "IoDispatcher"
+const val mainDispatcherTag = "MainDispatcher"
+const val mainImmediateDispatcherTag = "MainImmediateDispatcher"
+val domainModule = DI.Module("domain") {
+    bind<CoroutineDispatcher>(defaultDispatcherTag) with singleton {
+        Dispatchers.Default
+    }
+    bind<CoroutineDispatcher>(ioDispatcherTag) with singleton {
+        Dispatchers.IO
+    }
+    bind<CoroutineDispatcher>(mainDispatcherTag) with singleton {
+        Dispatchers.Main
+    }
+    bind<CoroutineDispatcher>(mainImmediateDispatcherTag) with singleton {
+        Dispatchers.Main.immediate
+    }
 }

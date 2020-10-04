@@ -19,25 +19,29 @@ import com.wind.domain.model.Manga
 import com.wind.myanimelist.R
 import com.wind.myanimelist.adapter.TitleViewHolder
 import com.wind.myanimelist.databinding.*
+import com.wind.myanimelist.di.homeModule
 import com.wind.myanimelist.model.HomeAnime
 import com.wind.myanimelist.model.HomeItem
 import com.wind.myanimelist.model.HomeManga
 import com.wind.myanimelist.model.Title
 import com.wind.myanimelist.util.AdapterTypeUtil
-import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.qualifiers.ApplicationContext
+import org.kodein.di.*
+import org.kodein.di.android.subDI
+import org.kodein.di.android.x.di
 import util.getDimen
-import javax.inject.Inject
 
 /**
  * Created by Phong Huynh on 9/26/2020
  */
-@AndroidEntryPoint
-class HomeFragment : Fragment(R.layout.fragment_home) {
+class HomeFragment : Fragment(R.layout.fragment_home), DIAware {
     private lateinit var viewBinding: FragmentHomeBinding
-    private val vmHome by viewModels<HomeViewModel>()
-    @Inject
-    lateinit var homeAdapter: HomeAdapter
+    override val di: DI
+        get() = subDI(parentDI = di()) {
+            import(homeModule(this@HomeFragment))
+        }
+
+    val homeAdapter: HomeAdapter by instance()
+    val vmHome by viewModels<HomeViewModel>()
 
     companion object {
         fun newInstance(): HomeFragment {
@@ -69,7 +73,7 @@ fun RecyclerView.loadData(data: List<HomeItem>?) {
     }
 }
 
-class HomeAdapter @Inject constructor(@ApplicationContext private val applicationContext: Context, private val homeMangaHozAdapter: HomeMangaHozAdapter, private val homeAnimeHozAdapter: HomeAnimeHozAdapter) : ListAdapter<HomeItem, RecyclerView.ViewHolder>(object : DiffUtil
+class HomeAdapter constructor(private val applicationContext: Context, private val homeMangaHozAdapter: HomeMangaHozAdapter, private val homeAnimeHozAdapter: HomeAnimeHozAdapter) : ListAdapter<HomeItem, RecyclerView.ViewHolder>(object : DiffUtil
 .ItemCallback<HomeItem>() {
     override fun areItemsTheSame(oldItem: HomeItem, newItem: HomeItem): Boolean {
         return oldItem === newItem
@@ -192,7 +196,7 @@ fun RecyclerView.loadManga(data: HomeItem?) {
     }
 }
 
-class HomeMangaHozAdapter @Inject constructor(private val requestManager: RequestManager): ListAdapter<Manga, HomeMangaHozAdapter.ViewHolder>(object : DiffUtil
+class HomeMangaHozAdapter constructor(private val requestManager: RequestManager): ListAdapter<Manga, HomeMangaHozAdapter.ViewHolder>(object : DiffUtil
 .ItemCallback<Manga>() {
     override fun areItemsTheSame(oldItem: Manga, newItem: Manga): Boolean {
         return oldItem.id == newItem.id
@@ -238,7 +242,7 @@ class HomeMangaHozAdapter @Inject constructor(private val requestManager: Reques
     inner class ViewHolder(val binding: ItemMangaBinding) : RecyclerView.ViewHolder(binding.root)
 }
 
-class HomeAnimeHozAdapter @Inject constructor(private val requestManager: RequestManager): ListAdapter<Anime, HomeAnimeHozAdapter.ViewHolder>(object : DiffUtil
+class HomeAnimeHozAdapter constructor(private val requestManager: RequestManager): ListAdapter<Anime, HomeAnimeHozAdapter.ViewHolder>(object : DiffUtil
 .ItemCallback<Anime>() {
     override fun areItemsTheSame(oldItem: Anime, newItem: Anime): Boolean {
         return oldItem.id == newItem.id

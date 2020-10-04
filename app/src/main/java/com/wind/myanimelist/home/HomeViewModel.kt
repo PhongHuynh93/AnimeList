@@ -1,28 +1,36 @@
 package com.wind.myanimelist.home
 
-import androidx.hilt.lifecycle.ViewModelInject
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wind.domain.data
 import com.wind.domain.usecase.GetTopAnimeUseCase
 import com.wind.domain.usecase.GetTopMangaUseCase
 import com.wind.myanimelist.R
+import com.wind.myanimelist.di.homeVModule
 import com.wind.myanimelist.model.HomeAnime
 import com.wind.myanimelist.model.HomeItem
 import com.wind.myanimelist.model.HomeManga
 import com.wind.myanimelist.model.Title
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import org.kodein.di.DIAware
+import org.kodein.di.android.subDI
+import org.kodein.di.instance
+import org.kodein.di.android.x.di
 
 /**
  * Created by Phong Huynh on 9/26/2020
  */
-class HomeViewModel @ViewModelInject constructor(
-    private val getTopMangaUseCase: GetTopMangaUseCase,
-    private val getTopAnimeUseCase: GetTopAnimeUseCase
-) : ViewModel() {
+class HomeViewModel constructor(app: Application) : AndroidViewModel(app), DIAware {
+    override val di by subDI(di()) {
+        import(homeVModule)
+    }
+    val getTopMangaUseCase: GetTopMangaUseCase by instance()
+    val getTopAnimeUseCase: GetTopAnimeUseCase by instance()
+
     private val _data: MutableLiveData<List<HomeItem>> = MutableLiveData()
     val data: LiveData<List<HomeItem>> = _data
 
@@ -35,7 +43,6 @@ class HomeViewModel @ViewModelInject constructor(
                 getTopAnimeUseCase(Unit)
             }
             val list = mutableListOf<HomeItem>()
-            // TODO: 10/3/2020 add the title
             topMangaListDeferred.await().apply {
                 data?.let {
                     list.add(Title(R.string.top_manga))

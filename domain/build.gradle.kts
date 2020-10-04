@@ -31,10 +31,7 @@ dependencies {
     implementation(Libs.Kotlin.std)
 
     // dagger
-    implementation(Libs.Dagger.coreDagger)
-    kapt(Libs.Dagger.compilerDagger)
     implementation(Libs.Dagger.core)
-    kapt(Libs.Dagger.compiler)
 
     // thread
     implementation(Libs.Thread.coroutine)

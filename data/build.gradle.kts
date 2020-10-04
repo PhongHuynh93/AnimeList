@@ -31,11 +31,7 @@ dependencies {
     implementation(Libs.Android.core)
 
     // dagger
-    implementation(Libs.Dagger.coreDagger)
-    kapt(Libs.Dagger.compilerDagger)
     implementation(Libs.Dagger.core)
-    implementation(Libs.Dagger.workmanager)
-    kapt(Libs.Dagger.compiler)
 
     // network
     implementation(Libs.Network.network1)
